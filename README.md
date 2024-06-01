@@ -15,7 +15,6 @@ The WeatherApp is a simple web application that provides current weather informa
   <img src="https://github.com/MiroslavMali/WeatherApp/assets/68731924/ee91aedf-469e-451e-81db-44e8cb72d4a6" width="45%" />
 </p>
 
-
 ## How to Use
 1. **Search by City**:
    - Enter the city name in the input field and click the "Search" button.
@@ -27,17 +26,11 @@ The WeatherApp is a simple web application that provides current weather informa
 - CSS
 - JavaScript
 - OpenWeatherMap API
+- Firebase Hosting
+- Firebase Firestore
 
-## Setup
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/MiroslavMali/WeatherApp.git
-   
-2. Navigate to the project directory:
-   ```bash
-   cd WeatherApp
-
-4. Open main.html in a web browser to view the app.
+## Live Demo
+Check out the live demo [here](https://weather-app-c4785.web.app).
 
 ## Author
 This project was made by Miroslav Mali. You can contact me at mixlaproduction@gmail.com.
