@@ -6,6 +6,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather App</title>
     <link rel="stylesheet" href="styles.css">
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyA7IPW6cvdKMaJVecKd2_ERhYvenmAzJVQ",
+            authDomain: "weather-app-c4785.firebaseapp.com",
+            projectId: "weather-app-c4785",
+            storageBucket: "weather-app-c4785.appspot.com",
+            messagingSenderId: "967668730141",
+            appId: "1:967668730141:web:530f7ae90dcf7caa6139f4"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+    </script>
 </head>
 
 <body>

@@ -7,18 +7,24 @@ document.addEventListener('DOMContentLoaded', function () {
     let searchButton = document.getElementsByClassName('search-button')[0];
     let gpsButton = document.getElementsByClassName('gps-button')[0];
     let hourlyMainContainer = document.querySelector('.hourly-main-container');
-    let loadingIndicator = document.createElement('div');
 
-    searchButton.addEventListener('click', function () {
+    function handle_search() {
         if (input.value) {
-            const city = input.value;
+            const city = input.value
             getWeatherData({ city });
+        }
+    }
+
+    searchButton.addEventListener('click', handle_search);
+
+    input.addEventListener('keydown', function (event) {
+        if (event.key === 'Enter') {
+            handle_search();
         }
     });
 
     gpsButton.addEventListener('click', getLocationAndWeather);
 
-    // Call this function on page load to get the initial weather based on location
     getLocationAndWeather();
 
     function getLocationAndWeather() {
@@ -28,7 +34,6 @@ document.addEventListener('DOMContentLoaded', function () {
             getWeatherData({ lat, lon });
         });
     }
-
     async function getWeatherData({ lat, lon, city }) {
         const api = 'd235471cc10b9febda95dead98d2fc1b';
         let request;
@@ -44,20 +49,23 @@ document.addEventListener('DOMContentLoaded', function () {
             if (!response.ok) throw new Error("Weather data not available.");
             const data = await response.json();
 
-            updateWeatherInfo(data.list[0])
+            updateWeatherInfo(data, city); // Pass city to the updateWeatherInfo function
             updateHourlyForecast(data.list);
 
         } catch (error) {
             console.log(error);
             alert('Failed to fetch weather data. Please try again later.');
         }
-
     }
 
-    function updateWeatherInfo(data) {
-        cityText.textContent = data.name || 'Current Location'; // 'name' may not be present in hourly data
-        tempText.textContent = Math.round(data.main.temp) + '°';
-        const condition = data.weather[0].main;
+    function updateWeatherInfo(data, city) {
+        if (city) {
+            cityText.textContent = capitalize(city);
+        } else {
+            cityText.textContent = data.city.name || 'Current Location';
+        }
+        tempText.textContent = Math.round(data.list[0].main.temp) + '°';
+        const condition = data.list[0].weather[0].main;
         conditionText.textContent = capitalize(condition);
         weatherIcon.src = `condition_images/${condition.toLowerCase()}.png`;
     }
