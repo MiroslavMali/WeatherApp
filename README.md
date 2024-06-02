@@ -12,7 +12,7 @@ The WeatherApp is a simple web application that provides current weather informa
 ## Screenshots
 <p float="left">
   <img src="https://github.com/MiroslavMali/WeatherApp/assets/68731924/64ca5cd3-1b51-472c-9707-0be33f7af8e6" width="45%" />
-  <img src="https://github.com/MiroslavMali/WeatherApp/assets/68731924/ee91aedf-469e-451e-81db-44e8cb72d4a6" width="45%" />
+  <img src="https://github.com/MiroslavMali/WeatherApp/assets/68731924/26302887-17d8-4ff9-b536-1fdbd67e9126" width="45%) />
 </p>
 
 ## How to Use
@@ -30,7 +30,7 @@ The WeatherApp is a simple web application that provides current weather informa
 - Firebase Firestore
 
 ## Live Demo
-Check out the live demo [here](https://weather-app-c4785.web.app).
+The webpage is online and active - check out the live demo [here](https://weather-app-c4785.web.app).
 
 ## Author
 This project was made by Miroslav Mali. You can contact me at mixlaproduction@gmail.com.
