@@ -1,21 +1,45 @@
 document.addEventListener('DOMContentLoaded', function () {
-    let cityText = document.getElementsByClassName('city')[0];
-    let tempText = document.getElementsByClassName('temp')[0];
-    let conditionText = document.getElementsByClassName('condition')[0];
-    let weatherIcon = document.getElementsByClassName('weather-icon')[0];
-    let input = document.getElementsByClassName('input')[0];
-    let searchButton = document.getElementsByClassName('search-button')[0];
-    let gpsButton = document.getElementsByClassName('gps-button')[0];
-    let hourlyMainContainer = document.querySelector('.hourly-main-container');
+    const cityText = document.querySelector('.city');
+    const tempText = document.querySelector('.temp');
+    const conditionText = document.querySelector('.condition');
+    const weatherIcon = document.querySelector('.weather-icon');
+    const input = document.querySelector('.input');
+    const searchButton = document.querySelector('.search-button');
+    const gpsButton = document.querySelector('.gps-button');
+    const hourlyMainContainer = document.querySelector('.hourly-main-container');
+    const rainButton = document.querySelector('.rain-button');
+    const tempButton = document.querySelector('.temp-button');
+    const windButton = document.querySelector('.wind-button');
+    const toggleButton = document.getElementById('toggle-units');
+    const loadingElement = document.getElementById('loading');
+    const api = '5108673f91dfc9438061a113f62b8fca';
+    let units = 'metric';
+    let lat;
+    let lon;
+    let currentCity = '';
+
+    const map = L.map('map').setView([51.1913, -114.4678], 10);
+    let currentLayer;
 
     function handle_search() {
         if (input.value) {
-            const city = input.value
-            getWeatherData({ city });
+            currentCity = input.value;
+            getWeatherData({ city: currentCity });
         }
     }
 
     searchButton.addEventListener('click', handle_search);
+
+    toggleButton.addEventListener('click', function () {
+        // Check the current value of units
+        // If it's 'metric', change it to 'imperial'
+        // Otherwise, change it to 'metric'
+        units = (units === 'metric') ? 'imperial' : 'metric';
+
+        // Call the getWeatherData function with the current latitude and longitude
+        // and the city (if available)
+        getWeatherData({ lat, lon, city: currentCity });
+    });
 
     input.addEventListener('keydown', function (event) {
         if (event.key === 'Enter') {
@@ -23,25 +47,42 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    gpsButton.addEventListener('click', getLocationAndWeather);
+    gpsButton.addEventListener('click', function () {
+        input.value = ""
+        getLocationAndWeather()
+    });
 
     getLocationAndWeather();
 
     function getLocationAndWeather() {
         navigator.geolocation.getCurrentPosition(function (position) {
-            const lat = position.coords.latitude;
-            const lon = position.coords.longitude;
+            lat = position.coords.latitude;
+            lon = position.coords.longitude;
+            currentCity = '';  // Clear the city name since we're using coordinates
             getWeatherData({ lat, lon });
         });
     }
+
+    function showLoading() {
+        loadingElement.style.display = 'block';
+    }
+
+    function hideLoading() {
+        loadingElement.style.display = 'none';
+    }
+
     async function getWeatherData({ lat, lon, city }) {
-        const api = 'd235471cc10b9febda95dead98d2fc1b';
+        showLoading();
         let request;
 
         if (city) {
-            request = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${api}&units=metric`;
+            request = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${api}&units=${units}`;
+        } else if (lat && lon) {
+            request = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${api}&units=${units}`;
         } else {
-            request = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${api}&units=metric`;
+            hideLoading();
+            alert('Please provide a city name or enable GPS to fetch the weather data.');
+            return;
         }
 
         try {
@@ -49,13 +90,18 @@ document.addEventListener('DOMContentLoaded', function () {
             if (!response.ok) throw new Error("Weather data not available.");
             const data = await response.json();
 
-            updateWeatherInfo(data, city); // Pass city to the updateWeatherInfo function
+            updateWeatherInfo(data, city);
             updateHourlyForecast(data.list);
+            setThemeBasedOnTime(data.city.timezone);
+
+            const coordinates = data.city.coord;
+            map.setView([coordinates.lat, coordinates.lon], 10);
 
         } catch (error) {
             console.log(error);
             alert('Failed to fetch weather data. Please try again later.');
         }
+        hideLoading();
     }
 
     function updateWeatherInfo(data, city) {
@@ -103,4 +149,43 @@ document.addEventListener('DOMContentLoaded', function () {
     function capitalize(string) {
         return string.charAt(0).toUpperCase() + string.slice(1);
     }
+
+    function setThemeBasedOnTime(timezoneOffset) {
+        const now = new Date();
+        const localTime = new Date(now.getTime() + timezoneOffset * 1000);
+        const hours = localTime.getUTCHours();
+        const isDayTime = hours >= 6 && hours <= 18;
+
+        if (isDayTime) {
+            document.body.style.background = "linear-gradient(to bottom, #87CEEB, #f0f4f7)";
+            document.body.classList.remove('dark-mode');
+        } else {
+            document.body.style.background = "linear-gradient(to bottom, #2c3e50, #4a6870)";
+            document.body.classList.add('dark-mode');
+        }
+    }
+
+    // Add a base layer
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+    }).addTo(map);
+
+    function addWeatherLayer(layerType) {
+        if (currentLayer) {
+            map.removeLayer(currentLayer);
+        }
+        currentLayer = L.tileLayer(`http://tile.openweathermap.org/map/${layerType}/{z}/{x}/{y}.png?appid=${api}`, {
+            maxZoom: 19,
+            opacity: 1,
+            attribution: '&copy; <a href="https://www.openweathermap.org/">OpenWeatherMap</a>'
+        });
+        currentLayer.addTo(map);
+    }
+
+    rainButton.addEventListener('click', () => addWeatherLayer('precipitation_new'));
+    tempButton.addEventListener('click', () => addWeatherLayer('temp_new'));
+    windButton.addEventListener('click', () => addWeatherLayer('wind_new'));
+
+    // Initialize the map with a default weather layer
+    addWeatherLayer('precipitation_new');
 });

@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather App</title>
     <link rel="stylesheet" href="styles.css?v=1.1">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 
     <script type="module">
         // Import the functions you need from the SDKs you need
@@ -18,7 +20,7 @@
             apiKey: "AIzaSyA7IPW6cvdKMaJVecKd2_ERhYvenmAzJVQ",
             authDomain: "weather-app-c4785.firebaseapp.com",
             projectId: "weather-app-c4785",
-            storageBucket: "weather-app-c4785.appspot.com",
+            storageBucket: "weather-app-c4785",
             messagingSenderId: "967668730141",
             appId: "1:967668730141:web:530f7ae90dcf7caa6139f4"
         };
@@ -31,11 +33,15 @@
 <body>
     <div class="container">
         <div class="weather-info">
-            <div class="city">Loading the weather...</div>
-            <div class="temp"></div>
-            <div class="condition"></div>
+            <div class="text-icon-container">
+                <div class="text-info">
+                    <div class="city">Loading the weather...</div>
+                    <div class="temp"></div>
+                    <div class="condition"></div>
+                </div>
+                <img src="" alt="Weather Icon" class="weather-icon">
+            </div>
         </div>
-        <img src="" alt="Weather Icon" class="weather-icon">
     </div>
     <div class="input-container">
         <input class="input" type="text" placeholder="Enter City">
@@ -44,11 +50,19 @@
             <button class="gps-button">
                 <img src="condition_images/gps.png" alt="GPS Icon" class="button-icon">
             </button>
+            <button id="toggle-units" class="toggle-units-button">Change Units</button>
         </div>
     </div>
     <div class="hourly-main-container">
         <!-- Content dynamically added by JavaScript -->
     </div>
+    <div class="weather-buttons">
+        <button class="rain-button">Rain</button>
+        <button class="temp-button">Temp</button>
+        <button class="wind-button">Wind</button>
+    </div>
+    <div id="map"></div>
+    <div id="loading" class="loading">Loading...</div>
     <script src="script.js?v=1.1"></script>
 </body>
 
