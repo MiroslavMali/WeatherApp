@@ -11,8 +11,8 @@ The WeatherApp is a simple web application that provides current weather informa
 
 ## Screenshots
 <p float="left">
-  <img src="https://github.com/MiroslavMali/WeatherApp/assets/68731924/64ca5cd3-1b51-472c-9707-0be33f7af8e6" width="45%" />
-  <img src="https://github.com/MiroslavMali/WeatherApp/assets/68731924/26302887-17d8-4ff9-b536-1fdbd67e9126" width="45%) />
+  <img src="https://github.com/MiroslavMali/WeatherApp/assets/68731924/ad96fbb6-3ca3-4b27-b3e6-6c89f659c803" width="45%" />
+  <img src="https://github.com/MiroslavMali/WeatherApp/assets/68731924/19029b4f-3546-487d-a287-0c42d680c631" width="45%) />
 </p>
 
 ## How to Use
