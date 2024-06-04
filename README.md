@@ -1,13 +1,15 @@
 # WeatherApp
 
 ## Description
-The WeatherApp is a simple web application that provides current weather information and hourly forecasts for any location. It uses the OpenWeatherMap API to fetch and display weather data, including temperature, weather conditions, and weather icons. Users can search for weather by city name or use their current geographic location to get weather updates.
+The WeatherApp is a web application that provides current weather information and hourly forecasts for any location. It uses the OpenWeatherMap API to fetch and display weather data, including temperature, weather conditions, and weather maps. Users can search for weather by city name or use their current geographic location to get weather updates.
 
 ## Features
 - Display current weather conditions.
 - Show hourly forecast with temperature and weather icons.
 - Search weather by city name.
 - Get weather based on the user's current location using GPS.
+- Switch metric or imperial units on button click
+- Live weather map showing the current precipitation, heat areas and wind
 
 ## Screenshots
 <p float="left">
@@ -19,7 +21,7 @@ The WeatherApp is a simple web application that provides current weather informa
 1. **Search by City**:
    - Enter the city name in the input field and click the "Search" button.
 2. **Current Location**:
-   - Click the GPS button to get weather updates for your current location.
+   - Click the GPS button to get weather updates for your current location (automatically shown upon loading the page).
   
 ## Live Demo
 Check out the live demo [here](https://weather-app-c4785.web.app).
