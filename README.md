@@ -20,6 +20,9 @@ The WeatherApp is a simple web application that provides current weather informa
    - Enter the city name in the input field and click the "Search" button.
 2. **Current Location**:
    - Click the GPS button to get weather updates for your current location.
+  
+## Live Demo
+Check out the live demo [here](https://weather-app-c4785.web.app).
 
 ## Technologies Used
 - HTML
