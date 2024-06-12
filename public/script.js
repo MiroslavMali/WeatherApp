@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function () {
         navigator.geolocation.getCurrentPosition(function (position) {
             lat = position.coords.latitude;
             lon = position.coords.longitude;
-            currentCity = '';  // Clear the city name since we're using coordinates
+            currentCity = '';  // Clear the city name since using coordinates
             getWeatherData({ lat, lon });
         });
     }

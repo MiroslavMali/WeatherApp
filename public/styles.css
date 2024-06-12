@@ -1,4 +1,5 @@
 /* Global Styles */
+
 body {
     font-family: Arial, sans-serif;
     background: linear-gradient(to bottom, #87CEEB, #f0f4f7);
@@ -159,7 +160,7 @@ body {
 #map {
     height: 500px;
     width: 100%;
-    max-width: 800px;
+    max-width: 600px;
     border: 2px solid #007BFF;
     border-radius: 10px;
     margin-bottom: 20px;
@@ -175,7 +176,19 @@ body {
     margin: 20px;
 }
 
+@media (max-width: 800px) {
+    #map {
+        height: 400px;
+        width: 550px;
+    }
+}
+
 @media (max-width: 600px) {
+    #map {
+        height: 300px;
+        width: 400px;
+    }
+
     .input {
         width: 80%;
     }
@@ -186,7 +199,18 @@ body {
         width: 80%;
     }
 
+    .hourly-individual:nth-of-type(5) {
+        display: none;
+    }
+}
+
+@media (max-width: 400px) {
     #map {
         height: 300px;
+        width: 300px;
+    }
+
+    .hourly-individual:nth-of-type(4) {
+        display: none;
     }
 }
